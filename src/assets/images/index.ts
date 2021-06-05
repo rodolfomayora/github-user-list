@@ -1,0 +1,1 @@
+export { default as pictureProfilePlaceholder } from './static/picture_profile_placholder.png';
