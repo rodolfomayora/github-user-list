@@ -1,0 +1,16 @@
+@import '../../assets/styles/config';
+
+.Header {
+  padding: 20px 0;
+  background-color: $green;
+
+  .link {
+    color: $white;
+    font-size: 28px;
+    transition: color 0.2s linear;
+
+    &:hover { color: $gray; }
+
+    &:active { color: $black; }
+  }
+}
