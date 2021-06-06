@@ -1,0 +1,35 @@
+@import '../../assets/styles/config';
+
+.ListItem {
+  list-style: none;
+  background-color: $white;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px $shadow;
+
+  &:first-of-type ~ & { margin-top: 5px; }
+
+  .listItemLink {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    color: $black;
+  }
+
+  .imageWrapper {
+    flex-shrink: 0;
+    width: 50px;
+  }
+
+  .userName {
+    margin-left: 20px;
+    font-size: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  @include responsiveSmall {
+    .listItemLink { padding-left: 40px; }
+  }
+}
