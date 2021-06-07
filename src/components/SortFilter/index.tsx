@@ -1,5 +1,5 @@
-import { FC, useState, useContext } from 'react';
-//import style from './style.module.scss';
+import { FC, useContext } from 'react';
+import CustomSelectInput from '../CustomSelectInput';
 
 import { filterStateContext, filterSetContext } from '../../context/filters';
 
@@ -7,35 +7,27 @@ const QuantityFilter: FC = () => {
 
   const { downwardSort } = useContext(filterStateContext);
   const setFilters = useContext(filterSetContext);
-  const [showOptions, setShowOptions] = useState<boolean>(false);
-  
-  const invertBoolean = (state: boolean): boolean => !state;
-  const setDownward = (option: boolean) => {
+
+  const label: string = 'Arrange List';
+  const options: object = {
+    upward: false,
+    downward: true
+  }
+
+  const setOption = (option: boolean): void => {
     setFilters((state: any) => ({
       ...state,
       downwardSort: option
     }));
-
-    setShowOptions(invertBoolean);
   }
-  const onClickToggle = () => setShowOptions(invertBoolean);
-  const onClickDownward = () => setDownward(true);
-  const onClickUpward = () => setDownward(false);
 
   return (
-    <div>
-      <div onClick={onClickToggle}>
-        downwardSort: {String(downwardSort)}
-      </div>
-
-      {showOptions && (
-        <ul>
-          <li onClick={onClickUpward}>upward</li>
-          <li onClick={onClickDownward}>downward</li>
-        </ul>
-      )}
-      
-    </div>
+    <CustomSelectInput
+      label={label}
+      options={options}
+      currentOption={downwardSort ? 'downward' : 'upward'}
+      setCurrentOption={setOption}
+    />
   )
 }
 
