@@ -1,7 +1,13 @@
 @import '../../assets/styles/config';
 
 .Header {
-  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  height: $headerHeight;
   background-color: $green;
 
   .link {
