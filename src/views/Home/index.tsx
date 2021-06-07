@@ -1,10 +1,15 @@
 import { FC } from 'react';
-import { Layout, UserListFilters, UserList } from '../../components';
+import { Layout, Container, UserListFilters, UserList } from '../../components';
+import styles from './styles.module.scss';
 
 const Home: FC = () => (
   <Layout>
-    <UserListFilters />
-    <UserList />
+    <main className={styles.Home}>
+      <Container>
+        <UserListFilters />
+        <UserList />
+      </Container>
+    </main>
   </Layout>  
 );
 

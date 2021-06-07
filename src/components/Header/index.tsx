@@ -4,6 +4,7 @@ import Container from '../Container';
 import styles from './styles.module.scss';
 
 const Header: FC = () => (
+  <>
   <header className={styles.Header}>
     <Container>
       <h1>
@@ -13,6 +14,9 @@ const Header: FC = () => (
       </h1>
     </Container>
   </header>
+
+  <div className={styles.headerSpacer}></div>
+  </>
 );
 
 export default Header;
