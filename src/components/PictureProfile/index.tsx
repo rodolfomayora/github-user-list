@@ -2,13 +2,18 @@ import { FC } from 'react';
 import { pictureProfilePlaceholder } from '../../assets/images';
 import styles from './styles.module.scss';
 
-const PictureProfile: FC = () => {
+type PictureProfileProps = {
+  src: string | null,
+  userName: string
+}
+
+const PictureProfile: FC<PictureProfileProps> = ({ src, userName }) => {
   return (
     <div className={styles.PictureProfile}>
       <div className={styles.aspectRatio1x1}>
         <img className={styles.picture}
-          src={pictureProfilePlaceholder}
-          alt="ejemplo" // set al dinamically
+          src={!!src ? src : pictureProfilePlaceholder}
+          alt={userName}
           width="30"
           height="30"
         />

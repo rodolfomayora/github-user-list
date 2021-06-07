@@ -34,7 +34,7 @@
   
   .optionsWrapper {
     position: absolute;
-    z-index: 1;
+    z-index: 3;
     width: 100%;
     top: calc(#{100%} + #{5px});
     background-color: $white;
