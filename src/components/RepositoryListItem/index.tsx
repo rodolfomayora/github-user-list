@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 
-type RepoListItemProps = {
+type RepositoryListItemProps = {
   name: string,
   mainLanguaje: string,
   onClickAction: () => void
 }
 
-const RepoListItem: FC<RepoListItemProps> = (props) => {
+const RepositoryListItem: FC<RepositoryListItemProps> = (props) => {
   const { name, mainLanguaje, onClickAction } = props;
   return (
-    <li className={styles.RepoListItem}
+    <li className={styles.RepositoryListItem}
       onClick={onClickAction}
     >
       <h3 className={styles.repoName}>{name}</h3>
@@ -19,4 +19,4 @@ const RepoListItem: FC<RepoListItemProps> = (props) => {
   )
 }
 
-export default RepoListItem;
+export default RepositoryListItem;
