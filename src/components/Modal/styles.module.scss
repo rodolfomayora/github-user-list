@@ -1,0 +1,49 @@
+@import '../../assets/styles/config';
+
+.Modal {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $transparentBlack;
+
+  .modalContent {
+    max-height: 80vmax;
+    padding: 40px;
+    overflow: auto;
+    background-color: $white;
+    border-radius: 5px;
+  }
+
+  .buttonWrapper {
+    text-align: right;
+    margin-bottom: 10px;
+  }
+
+  @include responsiveSmall {
+    .modalContent {
+      max-width: 567px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  @include responsiveMedium {
+    .modalContent {
+      max-height: 70vh;
+
+      &::-webkit-scrollbar { width: 8px; border-radius: 4px;}
+
+      &::-webkit-scrollbar-track { background-color: $gray; border-radius: 10px;}
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: $green;
+      }
+    }
+  }
+}
