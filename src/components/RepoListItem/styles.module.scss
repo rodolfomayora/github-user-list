@@ -1,0 +1,26 @@
+@import '../../assets/styles/config';
+
+.RepoListItem {
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: $generalBoxShadow;
+  background-color: $white;
+  cursor: pointer;
+  transition:
+    background-color 0.2s linear,
+    color 0.2s linear;
+
+  &:first-child ~ & { margin-top: 10px; }
+
+  .repoName {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  &:hover {
+    background-color: $black;
+    color: $white;
+  }
+
+  &:active { transform: scale(0.96); }
+}
