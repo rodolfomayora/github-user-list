@@ -1,49 +1,145 @@
-import { FC, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
-import { PictureProfile } from '../../components';
-//import style from './style.module.scss';
+import { FC, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import {
+  Layout,
+  Container,
+  PictureProfile,
+  BackButton,
+  Modal,
+  SecureExternalLink,
+  RepositoryListItem,
+  RepositoryInfo
+} from '../../components';
+import { userInfo, userRepositories } from '../../utils/userSampleData';
+import styles from './styles.module.scss';
 
 const UserDetail: FC = () => {
 
   const { userName } = useParams<any>();
-  const redirectPage = useHistory().push;
+  
+  // const redirectPage = useHistory().push;
 
   // useEffect(() => {
   //   if () redirectPage('/404');
   // },
   // [])
 
+  const parseData: any = { ...userInfo };
+  const allRepos: any = [...userRepositories];
+
+  const [selectedRepository, setSelectedRepository] = useState<object | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const onClickItemList = (repositoryObject: object) => () => {
+    setSelectedRepository(repositoryObject);
+    setShowModal(true);
+  }
+
+  const onClickCloseModal = () => {
+    setSelectedRepository(null);
+    setShowModal(false);
+  }
+
+  const noHasDataMessage: string = 'Does not have';
+
   return (
-    <div>
-      USER DETAIL
+    <Layout>
+      <main className={styles.UserDetail}>
+        <Container>
+          <BackButton
+              path="/"
+              label="Back to List"
+          />
 
-      <section>
-        <h2>User General Info</h2>
+          <section className={styles.generalInfo}>
+            <div className={styles.pictureWrapper}>
+              <div className={styles.middleLayer}>
+                <div className={styles.helperLayer} />
+                <div className={styles.shadowLayer}>
+                  <PictureProfile
+                    userName={userName}
+                    src={parseData.avatar_url}
+                  />
+                </div>
+              </div>
+            </div>
 
-        <div style={{ width: '120px' }}>
-          <PictureProfile />
-        </div>
+            <h2 className={styles.subtitle}>{parseData.name}</h2>
 
-        <p>User name: {userName}</p>
-        <p>Email: </p>
-        <p>Biography: </p>
-        <p>Address: </p>
-        <p>True Name (fullname): </p>
-        <p>etc...</p>
-      </section>
+            <div className={styles.infoWapper}>
+              <p>
+                <span className={styles.labelInfo}>User name: </span>
+                {parseData.login}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>Email: </span>
+                {parseData.email ?? 'Not available'}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>Biography: </span>
+                {parseData?.bio  ?? noHasDataMessage}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>Location: </span>
+                {parseData?.location ?? noHasDataMessage}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>Company: </span>
+                {parseData?.company ?? noHasDataMessage}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>{'Blog: '}</span>
+                {parseData?.blog 
+                ? <SecureExternalLink path={parseData.blog}/> 
+                : noHasDataMessage}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>{'Github profile: '}</span>
+                {parseData?.html_url
+                ? <SecureExternalLink path={parseData.html_url}/>
+                : noHasDataMessage}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>Twitter username: </span>
+                {parseData?.twitter_username ?? noHasDataMessage}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>Repositories: </span>
+                {parseData?.public_repos ?? noHasDataMessage}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>Followers: </span>
+                {parseData?.followers ?? noHasDataMessage}
+              </p>
+              <p>
+                <span className={styles.labelInfo}>Following: </span>
+                {parseData?.following ?? noHasDataMessage}
+              </p>
+            </div>
+          </section>
 
-      <section>
-        <h2>Infor Repositories (por cada repo)</h2>
-        <p>X Repositories</p>
-        <p>X Followers</p>
-        <p>X Following</p>
-      </section>
-      
-      <p></p>
+          <section>
+            <h2 className={styles.subtitle}>Repositories</h2>
 
-      <hr />
-      <Link to="/">back to home</Link>
-    </div>
+            <ul className={styles.repoList}>
+            {!!allRepos.length && allRepos.map((repo: any) => (
+              <RepositoryListItem key={repo.id}
+                name={repo.name}
+                mainLanguaje={repo.language}
+                onClickAction={onClickItemList(repo)}
+              />
+            ))}
+            </ul>
+          </section>
+        </Container>
+      </main>
+
+      {showModal && (
+        <Modal closeModal={onClickCloseModal}>
+          <RepositoryInfo repoInfo={selectedRepository} />
+        </Modal>
+      )}
+    </Layout>
   )
 }
 
