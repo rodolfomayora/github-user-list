@@ -9,6 +9,7 @@
   align-items: center;
   height: $headerHeight;
   background-color: $green;
+  box-shadow: $generalBoxShadow;
 
   .link {
     color: $white;

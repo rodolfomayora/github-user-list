@@ -11,7 +11,7 @@
     background-color 0.3s ease,
     transform 0.05s linear;
 
-  &:first-of-type ~ & { margin-top: 5px; }
+  &:first-of-type ~ & { margin-top: 10px; }
 
   &:before {
     content: '';
