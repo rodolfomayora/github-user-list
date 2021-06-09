@@ -14,6 +14,11 @@
     box-shadow: $generalBoxShadow;
   }
 
+  .loaderWrapper {
+    margin-top: 30vh;
+    text-align: center
+  }
+
   .pictureWrapper {
     position: absolute;
     top: 0;

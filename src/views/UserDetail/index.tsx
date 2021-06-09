@@ -1,31 +1,52 @@
-import { FC, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { FC, useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import {
-  Layout,
-  Container,
-  PictureProfile,
   BackButton,
+  Container,
+  Layout,
+  Loader,
   Modal,
-  SecureExternalLink,
+  PictureProfile,
+  RepositoryInfo,
   RepositoryListItem,
-  RepositoryInfo
+  SecureExternalLink,
 } from '../../components';
-import { userInfo, userRepositories } from '../../utils/userSampleData';
+import { fetchUserData } from '../../utils/fetchData'; 
 import styles from './styles.module.scss';
 
 const UserDetail: FC = () => {
 
   const { userName } = useParams<any>();
-  
-  // const redirectPage = useHistory().push;
+  const redirectPage = useHistory().push;
+  const noHasDataMessage: string = 'Does not have';
+  const [userData, setUserData] = useState<any | null>(null);
+  const [showLoader, setShowLoader] = useState<boolean>(true);
+  useEffect(() => {
 
-  // useEffect(() => {
-  //   if () redirectPage('/404');
-  // },
-  // [])
+    let didCancel: boolean = false;
 
-  const parseData: any = { ...userInfo };
-  const allRepos: any = [...userRepositories];
+    const getData = async () => {
+      try {
+        const data: object = await fetchUserData(userName);
+        if (!didCancel) {
+          setShowLoader(false);
+          setUserData({ ...data });
+        }
+      } catch (error) {
+        console.clear();
+        console.error(error);
+        setShowLoader(false);
+        redirectPage('/404');
+      }
+    }
+
+    getData();
+
+    return () => {
+      didCancel = true;
+    }
+  },
+  [userName, redirectPage])
 
   const [selectedRepository, setSelectedRepository] = useState<object | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -35,12 +56,10 @@ const UserDetail: FC = () => {
     setShowModal(true);
   }
 
-  const onClickCloseModal = () => {
+  const onClickCloseModal = (): void => {
     setSelectedRepository(null);
     setShowModal(false);
   }
-
-  const noHasDataMessage: string = 'Does not have';
 
   return (
     <Layout>
@@ -51,86 +70,96 @@ const UserDetail: FC = () => {
               label="Back to List"
           />
 
-          <section className={styles.generalInfo}>
-            <div className={styles.pictureWrapper}>
-              <div className={styles.middleLayer}>
-                <div className={styles.helperLayer} />
-                <div className={styles.shadowLayer}>
-                  <PictureProfile
-                    userName={userName}
-                    src={parseData.avatar_url}
-                  />
+          {showLoader && (
+            <div className={styles.loaderWrapper}>
+              <Loader />
+            </div>
+          )}
+
+          {!!userData && (
+            <section className={styles.generalInfo}>
+              <div className={styles.pictureWrapper}>
+                <div className={styles.middleLayer}>
+                  <div className={styles.helperLayer} />
+                  <div className={styles.shadowLayer}>
+                    <PictureProfile
+                      userName={userName}
+                      src={userData.avatar_url}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <h2 className={styles.subtitle}>{parseData.name}</h2>
+              <h2 className={styles.subtitle}>{userData.name}</h2>
 
-            <div className={styles.infoWapper}>
-              <p>
-                <span className={styles.labelInfo}>User name: </span>
-                {parseData.login}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>Email: </span>
-                {parseData.email ?? 'Not available'}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>Biography: </span>
-                {parseData?.bio  ?? noHasDataMessage}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>Location: </span>
-                {parseData?.location ?? noHasDataMessage}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>Company: </span>
-                {parseData?.company ?? noHasDataMessage}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>{'Blog: '}</span>
-                {parseData?.blog 
-                ? <SecureExternalLink path={parseData.blog}/> 
-                : noHasDataMessage}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>{'Github profile: '}</span>
-                {parseData?.html_url
-                ? <SecureExternalLink path={parseData.html_url}/>
-                : noHasDataMessage}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>Twitter username: </span>
-                {parseData?.twitter_username ?? noHasDataMessage}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>Repositories: </span>
-                {parseData?.public_repos ?? noHasDataMessage}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>Followers: </span>
-                {parseData?.followers ?? noHasDataMessage}
-              </p>
-              <p>
-                <span className={styles.labelInfo}>Following: </span>
-                {parseData?.following ?? noHasDataMessage}
-              </p>
-            </div>
-          </section>
+              <div className={styles.infoWapper}>
+                <p>
+                  <span className={styles.labelInfo}>User name: </span>
+                  {userData.login}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>Email: </span>
+                  {userData.email ?? 'Not available'}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>Biography: </span>
+                  {userData?.bio  ?? noHasDataMessage}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>Location: </span>
+                  {userData?.location ?? noHasDataMessage}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>Company: </span>
+                  {userData?.company ?? noHasDataMessage}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>{'Blog: '}</span>
+                  {userData?.blog 
+                  ? <SecureExternalLink path={userData.blog}/> 
+                  : noHasDataMessage}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>{'Github profile: '}</span>
+                  {userData?.html_url
+                  ? <SecureExternalLink path={userData.html_url}/>
+                  : noHasDataMessage}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>Twitter username: </span>
+                  {userData?.twitter_username ?? noHasDataMessage}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>Repositories: </span>
+                  {userData?.public_repos ?? noHasDataMessage}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>Followers: </span>
+                  {userData?.followers ?? noHasDataMessage}
+                </p>
+                <p>
+                  <span className={styles.labelInfo}>Following: </span>
+                  {userData?.following ?? noHasDataMessage}
+                </p>
+              </div>
+            </section>
+          )}
 
-          <section>
-            <h2 className={styles.subtitle}>Repositories</h2>
+          {!!userData && (
+            <section>
+              <h2 className={styles.subtitle}>Repositories</h2>
 
-            <ul className={styles.repoList}>
-            {!!allRepos.length && allRepos.map((repo: any) => (
-              <RepositoryListItem key={repo.id}
-                name={repo.name}
-                mainLanguaje={repo.language}
-                onClickAction={onClickItemList(repo)}
-              />
-            ))}
-            </ul>
-          </section>
+              <ul className={styles.repoList}>
+              {userData.allRepositories?.map((repo: any) => (
+                <RepositoryListItem key={repo.id}
+                  name={repo.name}
+                  mainLanguaje={repo.language}
+                  onClickAction={onClickItemList(repo)}
+                />
+              ))}
+              </ul>
+            </section>
+          )}
         </Container>
       </main>
 
