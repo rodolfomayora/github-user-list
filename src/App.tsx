@@ -10,8 +10,8 @@ const App: FC = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={views.Home} />
-          <Route exact path="/404" component={views.NoMatch404} />
           <Route exact path="/UserDetail/:userName" component={views.UserDetail} />
+          <Route path="*" component={views.NoMatch404} />
         </Switch>
       </BrowserRouter>
     </FiltersProvider>

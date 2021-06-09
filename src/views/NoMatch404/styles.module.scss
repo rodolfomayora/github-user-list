@@ -1,0 +1,23 @@
+@import '../../assets/styles/config';
+
+.NoMatch404 {
+
+  .messageCode {
+    margin-top: 100px;
+    font-size: 90px;
+    font-weight: 800;
+    text-align: center;
+    color: $green;
+  }
+
+  .message {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .butonWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+  }
+}
