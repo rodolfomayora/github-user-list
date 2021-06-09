@@ -13,8 +13,7 @@ const PictureProfile: FC<PictureProfileProps> = ({ src, userName }) => {
       <div className={styles.aspectRatio1x1}>
         <div className={styles.pictureWrapper}>
           <img className={styles.picture}
-            // src={!!src ? src : pictureProfilePlaceholder}
-            src={pictureProfilePlaceholder}
+            src={src ?? pictureProfilePlaceholder}
             alt={userName}
             width="30"
             height="30"

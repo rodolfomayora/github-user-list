@@ -5,7 +5,7 @@ import PictureProfile from '../PictureProfile';
 
 type UserListItemProps = {
   userName: string,
-  pictureProfileSrc: string
+  pictureProfileSrc: string | null
 }
 
 const UserListItem: FC<UserListItemProps> = ({ userName, pictureProfileSrc }) => {

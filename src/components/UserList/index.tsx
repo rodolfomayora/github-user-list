@@ -21,7 +21,8 @@ const UserList: FC = () => {
         .map((item: any) => (
           <UserListItem key={item.id}
             userName={item.login}
-            pictureProfileSrc={item.avatar_url}
+            // pictureProfileSrc={item.avatar_url}
+            pictureProfileSrc={null}
           />
       ))}
     </ol>
