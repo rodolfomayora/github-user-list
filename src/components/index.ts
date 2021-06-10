@@ -6,6 +6,7 @@ export { default as Header } from './Header';
 export { default as Layout } from './Layout';
 export { default as Loader } from './Loader';
 export { default as Modal } from './Modal';
+export { default as PaginationButtons } from './PaginationButtons';
 export { default as PictureProfile } from './PictureProfile';
 export { default as QuantityFilter } from './QuantityFilter';
 export { default as RepositoryInfo } from './RepositoryInfo';
