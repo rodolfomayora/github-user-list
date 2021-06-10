@@ -4,7 +4,7 @@ import CustomSelectInput from '../CustomSelectInput'
 
 const QuantityFilter: FC = () => {
 
-  const { currentQuantityItems } = useContext(filterStateContext);
+  const { usersPerPage } = useContext(filterStateContext);
   const setFilters = useContext(filterSetContext);
   
   const label: string = 'Items to show';
@@ -17,7 +17,7 @@ const QuantityFilter: FC = () => {
   const selectOption = (option: number): void => {
     setFilters((state: any) => ({
       ...state,
-      currentQuantityItems: option
+      usersPerPage: option
     }));
   }
 
@@ -25,7 +25,7 @@ const QuantityFilter: FC = () => {
     <CustomSelectInput
       label={label}
       options={options}     
-      currentOption={currentQuantityItems}
+      currentOption={usersPerPage}
       setCurrentOption={selectOption}
     />
   )

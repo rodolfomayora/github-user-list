@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { ChevronLeft } from '../../assets/images'
 import styles from './styles.module.scss';
 
 type PaginationButtonsProps = {
