@@ -6,8 +6,6 @@ import {
 } from '../../context/users';
 import { fetchUsersPerPage } from '../../utils/fetchData';
 
-import userListSampleData from '../../utils/userListSampleData';
-
 const UsersProvider: FC = ({ children }) => {
 
   const [users, setUsers] = useState(defaultUsers);
@@ -73,10 +71,8 @@ const UsersProvider: FC = ({ children }) => {
       }
     }
 
-    // getUserList();
+    getUserList();
 
-    setCurrentList(userListSampleData);
-    
     return () => {
       didCancel = true;
     }

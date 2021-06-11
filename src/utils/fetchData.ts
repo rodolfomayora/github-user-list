@@ -18,21 +18,21 @@ const userRepositoriesURL = (userName: string): string => `${usersURL}/${userNam
 type FetchParams = {
   url: string,
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
-  token?: string | null
 }
 
 const fetchResponse = async (params: FetchParams): Promise<Response> => {
 
-  const { url, method = 'GET', token = null } = params;
+  const { url, method = 'GET' } = params;
   const objectRequest: any = {
     method,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     }
   }
   
-  if (!!token) objectRequest.headers.Authorization = `Bearer: ${token}`;
-  const response: Response = await window.fetch(url);
+  const token: any = process.env.REACT_APP_GITHUB_API_KEY ?? false;
+  if (token) objectRequest.headers.Authorization = `Bearer ${token}`;
+  const response: Response = await window.fetch(url, objectRequest);
   if (!response.ok) throw new Error();
   return response;
 }
