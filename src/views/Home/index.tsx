@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import {
   Layout,
   Container,
@@ -7,15 +7,23 @@ import {
 } from '../../components';
 import styles from './styles.module.scss';
 
-const Home: FC = () => (
-  <Layout>
-    <main className={styles.Home}>
-      <Container>
-        <UserListFilters />
-        <UserList />
-      </Container>
-    </main>
-  </Layout>  
-);
+const Home: FC = () => {
+  
+  useEffect(() => {
+    document.title = 'Home | Github User List';
+  },
+  [])
+
+  return (
+    <Layout>
+      <main className={styles.Home}>
+        <Container>
+          <UserListFilters />
+          <UserList />
+        </Container>
+      </main>
+    </Layout>  
+  )
+}
 
 export default Home;

@@ -16,11 +16,17 @@ import styles from './styles.module.scss';
 
 const UserDetail: FC = () => {
 
+  useEffect(() => {
+    document.title = 'User Detail | Github User List';
+  },
+  [])
+
   const { userName } = useParams<any>();
   const redirectPage = useHistory().push;
   const noHasDataMessage: string = 'Does not have';
   const [userData, setUserData] = useState<any | null>(null);
   const [showLoader, setShowLoader] = useState<boolean>(true);
+
   useEffect(() => {
 
     let didCancel: boolean = false;
