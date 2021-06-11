@@ -42,6 +42,7 @@
 
   .userName {
     margin-left: 20px;
+    margin-right: auto;
     font-size: 20px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -50,10 +51,18 @@
     transition: color 0.3s ease;
   }
 
+  .icon {
+    flex-shrink: 0;
+    width: 42px;
+    fill: $green;
+  }
+
   &:hover {
     background-color: $black;
 
     .userName { color: $white; }
+
+    .icon { fill: $white; }
   }
 
   &:active {

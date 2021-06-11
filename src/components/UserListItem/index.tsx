@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './styles.module.scss';
 import PictureProfile from '../PictureProfile';
+import { ChevronCircleRight} from '../../assets/images';
+import styles from './styles.module.scss';
 
 type UserListItemProps = {
   userName: string,
@@ -21,6 +22,8 @@ const UserListItem: FC<UserListItemProps> = ({ userName, pictureProfileSrc }) =>
           />
         </div>
         <span className={styles.userName}>{userName}</span>
+
+        <ChevronCircleRight className={styles.icon} />
       </Link>
     </li>
   )
