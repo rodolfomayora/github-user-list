@@ -1,0 +1,32 @@
+@import '../../assets/styles/config';
+
+.PictureProfile {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+
+  .aspectRatio1x1 {
+    padding-top: 100%;
+    position: relative;
+  }
+
+  .pictureWrapper {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background:
+      $lightBlue 
+      url('../../assets/images/static/picture_profile_placholder.png')
+      scroll
+      no-repeat
+      center / cover;
+  }
+
+  .picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

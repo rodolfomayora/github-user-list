@@ -1,0 +1,42 @@
+@import '../../assets/styles/config';
+
+.PaginationButtons {
+  display: flex;
+
+  & > * + * { margin-left: 10px; }
+
+  .button,
+  .pageCounter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 12px;
+  }
+
+  .button {
+    min-width: 60px;
+    border-radius: 5px;
+    background-color: $green;
+    box-shadow: $generalBoxShadow;
+    color: $white;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+
+    &.disable {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &:hover { background-color: $black; }
+
+    &:active { transform: scale(0.94); }
+  }
+
+  .pageCounter {
+    border-radius: 5px;
+    box-shadow: $generalBoxShadow;
+    background-color: $white;
+    font-size: 14px;
+    font-weight: 700;
+  }
+}

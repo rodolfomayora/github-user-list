@@ -1,0 +1,17 @@
+@mixin responsiveSmall {
+  @media screen and (min-width: #{$small}) {
+    @content;
+  }
+}
+
+@mixin responsiveMedium {
+  @media screen and (min-width: #{$medium}) {
+    @content;
+  }
+}
+
+@mixin responsiveLarge {
+  @media screen and (min-width: #{$large}) {
+    @content;
+  }
+}

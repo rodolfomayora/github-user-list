@@ -1,0 +1,25 @@
+@import '../../assets/styles/config';
+
+.Header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: $headerHeight;
+  background-color: $green;
+  box-shadow: $generalBoxShadow;
+
+  .link {
+    color: $white;
+    font-size: 28px;
+    transition: color 0.2s linear;
+
+    &:hover { color: $gray; }
+
+    &:active { color: $black; }
+  }
+}
+
+.headerSpacer { height: $headerHeight; }

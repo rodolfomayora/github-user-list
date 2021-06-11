@@ -1,0 +1,77 @@
+@import '../../assets/styles/config';
+
+.UserDetail {
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  .generalInfo {
+    position: relative;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    padding: 100px 30px 30px;
+    border-radius: 5px;
+    background-color: $white;
+    box-shadow: $generalBoxShadow;
+  }
+
+  .loaderWrapper {
+    margin-top: 30vh;
+    text-align: center
+  }
+
+  .pictureWrapper {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: $lightWhite;
+    box-shadow: $generalBoxShadow inset;
+  }
+
+  .middleLayer { position: relative; }
+  
+  .helperLayer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: 160px;
+    height: 80px;
+    border-radius: 3px;
+    background-color: $lightWhite;
+  }
+
+  .shadowLayer {
+    position: relative;
+    border-radius: 50%;
+    box-shadow: $generalBoxShadow;
+  }
+
+  .infoWapper > * + * { margin-top: 10px; }
+
+  .subtitle {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .labelInfo { font-weight: 700; }
+
+  .repoList {
+    list-style: none;
+    padding: 0;
+  }
+
+  @include responsiveMedium {
+    .generalInfo {
+      margin-top: 40px;
+      padding: 100px 40px 40px;
+    }
+  }
+}
