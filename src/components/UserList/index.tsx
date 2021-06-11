@@ -1,64 +1,58 @@
-import { FC, useContext, useEffect, useState } from 'react';
-import { filterStateContext } from '../../context/filters';
+import { FC, useContext } from 'react';
 import Loader from '../Loader';
 import PaginationButtons from '../PaginationButtons';
-import UserListItem from '../UserListItem';
 import styles from './styles.module.scss';
+import UserListItem from '../UserListItem';
+import { filterStateContext, filterSetContext } from '../../context/filters';
 import { fetchUsersPerPage } from '../../utils/fetchData';
-
-// import userListSampleData from '../../utils/userListSampleData';
 
 const UserList: FC = () => {
 
-  const initListOriginId: number = 0;
+  const { downwardSort, currentUserList, currentPage } = useContext(filterStateContext);
+  const { showLoader, usersPerPage, nextListOriginId } = useContext(filterStateContext);
+  const { previousListOriginIds } = useContext(filterStateContext);;
+  const setFilters = useContext(filterSetContext);
 
-  const { downwardSort, usersPerPage } = useContext(filterStateContext);
+  const setNextListOriginId = (nextId: number): void => {
+    setFilters((state: any) => ({
+      ...state,
+      nextListOriginId: nextId
+    }))
+  }
 
-  const [showLoader, setShowLoader] = useState<boolean>(true);
-  const [currentList, setCurrentList] = useState<Array<any>>([]);
-  const [previousListOriginIds, setPreviousListOriginIds] = useState<Array<number>>([]);
-  const [nextListOriginId, setNextListOriginId] = useState<number>(initListOriginId);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const setPreviousListOriginIds = (previousIds: Array<number>): void => {
+    setFilters((state: any) => ({
+      ...state,
+      previousListOriginIds: previousIds
+    }))
+  }
 
-  useEffect(() => {
-    let didCancel: boolean = false;
+  const setCurrentList = (list: Array<any>): void => {
+    setFilters((state: any) => ({
+      ...state,
+      currentUserList: list
+    }))
+  }
 
-    const getUserList = async () => {
-      try {
-        const { userList, nextListOrigin } = await fetchUsersPerPage(25, initListOriginId);
+  const setShowLoader = (isLoading: boolean): void => {
+    setFilters((state: any) => ({
+      ...state,
+      showLoader: isLoading
+    }))
+  }
 
-        if (!didCancel) {
-          setShowLoader(false);
-          setNextListOriginId(nextListOrigin);
-          setPreviousListOriginIds((state: any) => state.concat(initListOriginId))
-          setCurrentList(userList);
-        }
-      } catch (error) {
-        console.clear();
-        console.error(error);
-        setShowLoader(false);
-      }
-    }
-
-    getUserList();
-    
-    // window.setTimeout(() => {
-    //   const copyUserList: Array<any> = [...userListSampleData].slice(0, usersPerPage);
-    //   setShowLoader(false);
-    //   setCurrentList(copyUserList);
-    // }, 2000)
-    
-    return () => {
-      didCancel = true;
-    }
-  },
-  [initListOriginId])
+  const setCurrentPage = (numberPage: number): void => {
+    setFilters((state: any) => ({
+      ...state,
+      currentPage: numberPage
+    }))
+  }
 
   const onClickNextPage = async () => {
     try {
       setCurrentList([]);
       setShowLoader(true);
-      setCurrentPage((state: number) => state + 1)
+      setCurrentPage(currentPage + 1)
       setPreviousListOriginIds(previousListOriginIds.concat(nextListOriginId));
 
       const data = await fetchUsersPerPage(usersPerPage, nextListOriginId);
@@ -79,7 +73,7 @@ const UserList: FC = () => {
     try {
       setCurrentList([]);
       setShowLoader(true);
-      setCurrentPage((state: number) => state - 1)
+      setCurrentPage(currentPage - 1)
       const newPrevHistory: Array<number> = previousListOriginIds.slice(0, -1);
       setPreviousListOriginIds(newPrevHistory);
 
@@ -98,12 +92,12 @@ const UserList: FC = () => {
     }
   }
 
-  const isFirstPage = (): boolean => previousListOriginIds.length <= 1;
+  const isFirstPage = (): boolean => previousListOriginIds?.length <= 1;
 
   const getCopyList = (downward: boolean): Array<any> => {
     return downward
-      ? [...currentList].reverse()
-      : [...currentList]
+      ? [...currentUserList].reverse()
+      : [...currentUserList]
   }
 
   return (
@@ -115,11 +109,10 @@ const UserList: FC = () => {
         </div>
       )}
 
-      {!!currentList.length && getCopyList(downwardSort).map((item: any) => (
+      {!!currentUserList.length && getCopyList(downwardSort).map((item: any) => (
         <UserListItem key={item.id}
           userName={item.login}
-          // pictureProfileSrc={item.avatar_url}
-          pictureProfileSrc={null}
+          pictureProfileSrc={item.avatar_url}
         />
       ))}
     </ol>
