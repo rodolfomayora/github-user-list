@@ -2,7 +2,7 @@ import { FC } from 'react';
 import './assets/styles/styles.global.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import * as views from './views';
-import FiltersProvider from './providers/FiltersProvider';
+import FiltersProvider from './providers/UsersProvider';
 
 const App: FC = () => {
   return (

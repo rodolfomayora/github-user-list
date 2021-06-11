@@ -1,48 +1,48 @@
 import { FC, useContext } from 'react';
 import Loader from '../Loader';
 import PaginationButtons from '../PaginationButtons';
-import styles from './styles.module.scss';
 import UserListItem from '../UserListItem';
-import { filterStateContext, filterSetContext } from '../../context/filters';
+import styles from './styles.module.scss';
+import { usersStateContext, usersSetContext } from '../../context/users';
 import { fetchUsersPerPage } from '../../utils/fetchData';
 
 const UserList: FC = () => {
 
-  const { downwardSort, currentUserList, currentPage } = useContext(filterStateContext);
-  const { showLoader, usersPerPage, nextListOriginId } = useContext(filterStateContext);
-  const { previousListOriginIds } = useContext(filterStateContext);;
-  const setFilters = useContext(filterSetContext);
+  const { downwardSort, currentUserList, currentPage } = useContext(usersStateContext);
+  const { showLoader, usersPerPage, nextListOriginId } = useContext(usersStateContext);
+  const { previousListOriginIds } = useContext(usersStateContext);;
+  const setUsers = useContext(usersSetContext);
 
   const setNextListOriginId = (nextId: number): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       nextListOriginId: nextId
     }))
   }
 
   const setPreviousListOriginIds = (previousIds: Array<number>): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       previousListOriginIds: previousIds
     }))
   }
 
   const setCurrentList = (list: Array<any>): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       currentUserList: list
     }))
   }
 
   const setShowLoader = (isLoading: boolean): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       showLoader: isLoading
     }))
   }
 
   const setCurrentPage = (numberPage: number): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       currentPage: numberPage
     }))

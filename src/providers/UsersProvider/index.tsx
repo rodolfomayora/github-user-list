@@ -1,47 +1,47 @@
 import { FC, useState, useEffect } from 'react';
 import {
-  defaultFilter,
-  filterStateContext,
-  filterSetContext
-} from '../../context/filters';
+  defaultUsers,
+  usersStateContext,
+  usersSetContext
+} from '../../context/users';
 import { fetchUsersPerPage } from '../../utils/fetchData';
 
-const FiltersProvider: FC = ({ children }) => {
+const UsersProvider: FC = ({ children }) => {
 
-  const [filters, setFilters] = useState(defaultFilter);
+  const [users, setUsers] = useState(defaultUsers);
 
   const initListOriginId: number = 0;
 
   const setNextListOriginId = (nextId: number): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       nextListOriginId: nextId
     }))
   }
 
    const setPreviousListOriginIds = (): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       previousListOriginIds: [initListOriginId]
     }))
   }
 
   const setCurrentList = (list: Array<any>): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       currentUserList: list
     }))
   }
 
   const setShowLoader = (isLoading: boolean): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       showLoader: isLoading
     }))
   }
 
   const setCurrentPage = (numberPage: number): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       currentPage: numberPage
     }))
@@ -55,8 +55,8 @@ const FiltersProvider: FC = ({ children }) => {
         setCurrentList([]);
         setShowLoader(true);
         setCurrentPage(1);
-        const users = await fetchUsersPerPage(filters.usersPerPage, initListOriginId);
-        const { userList, nextListOrigin } = users;
+        const dataObject = await fetchUsersPerPage(users.usersPerPage, initListOriginId);
+        const { userList, nextListOrigin } = dataObject;
 
         if (!didCancel) {
           setShowLoader(false);
@@ -77,17 +77,17 @@ const FiltersProvider: FC = ({ children }) => {
       didCancel = true;
     }
   },
-  [initListOriginId, filters.usersPerPage])
+  [initListOriginId, users.usersPerPage])
 
 
 
   return (
-    <filterStateContext.Provider value={filters}>
-      <filterSetContext.Provider value={setFilters}>
+    <usersStateContext.Provider value={users}>
+      <usersSetContext.Provider value={setUsers}>
         {children}
-      </filterSetContext.Provider>
-    </filterStateContext.Provider>
+      </usersSetContext.Provider>
+    </usersStateContext.Provider>
   )
 }
 
-export default FiltersProvider;
+export default UsersProvider;

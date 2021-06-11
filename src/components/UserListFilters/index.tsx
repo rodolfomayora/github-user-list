@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
-import QuantityFilter from '../QuantityFilter';
-import SortFilter from '../SortFilter';
+import UserQuantityFilter from '../UserQuantityFilter';
+import UserArrangeFilter from '../UserArrangeFilter';
 
 const UserListFilters: FC = () => (
   <div className={styles.UserListFilters}>
-    <QuantityFilter />
-    <SortFilter />
+    <UserQuantityFilter />
+    <UserArrangeFilter />
   </div>
 );
 

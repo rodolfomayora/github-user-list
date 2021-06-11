@@ -1,12 +1,11 @@
 import { FC, useContext } from 'react';
 import CustomSelectInput from '../CustomSelectInput';
+import { usersStateContext, usersSetContext } from '../../context/users';
 
-import { filterStateContext, filterSetContext } from '../../context/filters';
+const UserArrangeFilter: FC = () => {
 
-const QuantityFilter: FC = () => {
-
-  const { downwardSort } = useContext(filterStateContext);
-  const setFilters = useContext(filterSetContext);
+  const { downwardSort } = useContext(usersStateContext);
+  const setUsers = useContext(usersSetContext);
 
   const label: string = 'Arrange List';
   const options: object = {
@@ -15,7 +14,7 @@ const QuantityFilter: FC = () => {
   }
 
   const setOption = (option: boolean): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       downwardSort: option
     }));
@@ -31,4 +30,4 @@ const QuantityFilter: FC = () => {
   )
 }
 
-export default QuantityFilter;
+export default UserArrangeFilter;

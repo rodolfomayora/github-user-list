@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-type FilterStateContext = {
+type UsersStateContext = {
   downwardSort: boolean,
   currentPage: number,
   usersPerPage: number,
@@ -10,7 +10,7 @@ type FilterStateContext = {
   showLoader: boolean
 }
 
-export const defaultFilter: FilterStateContext = {
+export const defaultUsers: UsersStateContext = {
   downwardSort: false,
   usersPerPage: 25,
   currentPage: 1,
@@ -22,5 +22,5 @@ export const defaultFilter: FilterStateContext = {
 
 const setContext: Function | any = null;
 
-export const filterStateContext = createContext(defaultFilter);
-export const filterSetContext = createContext(setContext);
+export const usersStateContext = createContext(defaultUsers);
+export const usersSetContext = createContext(setContext);

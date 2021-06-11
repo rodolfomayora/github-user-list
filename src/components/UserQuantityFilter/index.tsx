@@ -1,11 +1,11 @@
 import { FC, useContext } from 'react';
-import { filterStateContext, filterSetContext } from '../../context/filters';
 import CustomSelectInput from '../CustomSelectInput'
+import { usersStateContext, usersSetContext } from '../../context/users';
 
-const QuantityFilter: FC = () => {
+const UserQuantityFilter: FC = () => {
 
-  const { usersPerPage } = useContext(filterStateContext);
-  const setFilters = useContext(filterSetContext);
+  const { usersPerPage } = useContext(usersStateContext);
+  const setUsers = useContext(usersSetContext);
   
   const label: string = 'Items to show';
   const options: object = {
@@ -15,7 +15,7 @@ const QuantityFilter: FC = () => {
   }
 
   const selectOption = (option: number): void => {
-    setFilters((state: any) => ({
+    setUsers((state: any) => ({
       ...state,
       usersPerPage: option
     }));
@@ -31,4 +31,4 @@ const QuantityFilter: FC = () => {
   )
 }
 
-export default QuantityFilter;
+export default UserQuantityFilter;
